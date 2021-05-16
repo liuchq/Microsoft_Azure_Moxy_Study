@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- @version $Id: applicationContext.xml 561608 2007-08-01 00:33:12Z vgritsenko $ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+  <!--Spring配置文件，这里主要配置和业务逻辑有关的-->
+  <!--数据源，Mybatis整合,事务控制  等等-->
+
+
+  <!--==============================数据源配置 start===================================-->
+  <!--扫描业务逻辑组件-->
+  <context:component-scan base-package="com.liuchq.Moxy">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+  </context:component-scan>
+
+  <context:property-placeholder location="classpath:dbSourceConfig.properties"></context:property-placeholder>
+  <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+    <property name="driverClass" value="${jdbc.driverClass}"></property>
+    <property name="user" value="${jdbc.user}"></property>
+    <property name="password" value="${jdbc.password}"></property>
+    <property name="testConnectionOnCheckin" value="false"></property>
+    <property name="testConnectionOnCheckout" value="true"></property>
+    <property name="preferredTestQuery" value="SELECT 1"></property>
+  </bean>
+  <!--==============================数据源配置 end===================================-->
+
+
+  <!--============================Mybatis整合配置  start=====================================-->
+  <!--配置和Mybatis的整合-->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--指定Mybatis配置文件的位置-->
+    <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    <!--数据源-->
+    <property name="dataSource" ref="pooledDataSource"></property>
+    <!--指定mybatis.mapper文件位置-->
+    <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+  </bean>
+
+  <!--配置扫描器，将mybatis接口的实现加入到ioc容器中-->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!--扫描所有的dao接口的实现加入到容器中-->
+    <property name="basePackage" value="com.liuchq.testMaven.dao"></property>
+  </bean>
+
+  <!--配置一个可以批量执行的sqlSession-->
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+    <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    <!--  executorType 的Batch 会导致sql语句中 返回 int 的方法 返回值为-2147482646   -->
+  </bean>
+  <!--==============================Mybatis整合配置 end===================================-->
+
+
+  <!--==============================事务控制配置 start===================================-->
+  <!--事务控制的配置-->
+  <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="pooledDataSource"></property>
+  </bean>
+
+  <!--配置事务增强，事务如何切入  (隔离级别,传播行为,超时)-->
+  <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+    <tx:attributes>
+      <!--
+          给具体的业务方法,说明它需要的事务属性
+          name:业务方法名称,name的组成1,业务方法的名称,2.带有部分通配符的方法名称,3.使用*
+          propagation:事务传播行为的值
+          isolation:隔离级别
+          read-only:是否只读,默认false
+          timeout:超时时间
+          rollback-for:指回滚的异常类列表,填写异常的全限定名称,逗号分隔;例如(java.lang.NullPointerException)
+       -->
+      <!--testTransaction这个方法有事务-->
+      <tx:method name="testTransaction" propagation="REQUIRED" isolation="DEFAULT" read-only="false" rollback-for="java.lang.NullPointerException"/>
+      <tx:method name="testTransactionByAspectJ" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+      <!--以get select开始的所有方法-->
+      <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+      <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+      <!--通配符方法定义  增删改定义开启事务    -->
+      <tx:method name="add*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+      <tx:method name="insert*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+      <tx:method name="modify*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+      <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+      <tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+      <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+
+      <!-- 以上方法以外的,用*表示     -->
+      <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+    </tx:attributes>
+  </tx:advice>
+
+  <!--1开启基于注解的事务，2也可以使用xml配置形成的事务（主要的都是配置方式，此处用配置）-->
+  <aop:config>
+    <!--切入点表达式-->
+    <aop:pointcut id="txPoint" expression="execution(* *..service..*.*(..))"/>
+    <!--事务增强配置 与 切入点表达式 关联上-->
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"></aop:advisor>
+  </aop:config>
+  <!--==============================事务控制配置 end===================================-->
+
+  <!--Spring配置文件的核心点：1.数据源，2.与Mybatis的整合，3事务控制-->
+
+  <!--==============================AOP切面功能配置 start===================================-->
+  <!-- 定义好切面类对象  此处是手动注册bean，也可以在每个@Aspect切面类用@Compoent注解，达到Spring自动扫描注册-->
+<!--  <bean id="aspect" class="com.liuchq.testMaven.handle.CityAspect"/>-->
+  <!--
+    声明自动代理生成器，目的是创建AOP目标对象的代理（proxy）
+    调用aspectj框架中的功能，寻找Spring容器中的所有 目标对象，把每个目标对象加入切面类中的功能，生成代理
+    这个代理对象是修改的内存中的目标对象，这个目标对象就是代理对象（proxy）
+  -->
+  <aop:aspectj-autoproxy/>
+  <!--==============================AOP切面功能配置 end===================================-->
+</beans>

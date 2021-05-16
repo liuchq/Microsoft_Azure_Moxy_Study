@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--配置网站跳转逻辑的控制-->
+    <context:component-scan base-package="com.liuchq" use-default-filters="false">
+        <!--只扫描控制器-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--配置Spring-mvc视图解析器，方便页面返回-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--  WEB-INF 这个页面下的文件是受保护的      -->
+        <!-- 前缀:prefix   指定视图文件的路径       -->
+        <property name="prefix" value="/WEB-INF/pages/"></property>
+        <!-- 后缀:suffix   视图文件的扩展名       -->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--两个标准配置-->
+    <!-- 一、声明静态资源的第一种处理方式 （跟服务器有关，不推荐）
+        1.将Spring-mvc不能处理的请求交给服务器===相当于让它去处理静态资源
+        2.它会创建DefaultServletHttpRequestHandler把接收的静态资源地址，转发给了tomcat的default servlet
+        优点：配置简单
+        缺点：依赖于tomcat服务器提供的能力
+    -->
+<!--    <mvc:default-servlet-handler/>-->
+
+    <!-- 一、声明静态资源的第二种处理方式 （推荐）
+    String专门定义的静态资源访问请求处理器,它会创建ResourceHttpRequestHandler.专门解决静态资源无法访问的问题,不用依赖服务器的功能
+        1.mapping:访问的静态资源的地址,使用通配符(**);
+                **:表示任意目录和目录中资源的名称
+        2.location:静态资源在项目中的位置,不要使用/WEB-INF目录
+
+        这样的话,在webapp根目录下创建一个静态资源文件夹static,所有的静态资源都放在下面,就能方便获取了
+    -->
+    <!-- 这两种关于静态资源的声明配置,只有在url-pattern设置为"/"的情况下需要使用   -->
+    <mvc:resources mapping="/static/**" location="/static/" />
+    <!-- 二、控制器返回对象的便捷转换
+        能支持Spring-mvc更高级的一些功能   JSR303校验，快捷的AJAX
+        用@ResponseBody注解，使得返回值对象转换为json
+    -->
+    <mvc:annotation-driven/>
+
+
+    <!-- SpringMVC 异常处理(一般处理的是Controller内的) -->
+    <context:component-scan base-package="com.liuchq.Moxy.handle"/>
+
+    <!-- 声明拦截器   -->
+    <mvc:interceptors>
+        <!--第一个拦截器-->
+        <mvc:interceptor>
+            <!--指定拦截地址
+                path:使用**通配符
+                    例如:path="user/**"
+            -->
+            <mvc:mapping path="/city/testInterceptor.do"/>
+            <!--指定不拦截的地址-->
+<!--            <mvc:exclude-mapping path="/city/testLoginInterceptor.do"/>-->
+            <bean class="com.liuchq.testMaven.handle.MyInterceptor"/>
+        </mvc:interceptor>
+        <!-- 第二个拦截器,测试多个拦截器的执行顺序-->
+        <mvc:interceptor>
+            <mvc:mapping path="/city/testInterceptor.do"/>
+            <bean class="com.liuchq.testMaven.handle.MyInterceptor2"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/city/testLoginInterceptor.do"/>
+            <bean class="com.liuchq.testMaven.handle.MyLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

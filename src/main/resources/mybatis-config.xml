@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--设置输出日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    <typeAliases>
+        <package name="com.liuchq.Moxy.bean"/>
+    </typeAliases>
+    <plugins>
+        <!--配置pageHelper的设置 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--此处也可以配置分页的参数，具体查看文档，现在可不配-->
+        </plugin>
+    </plugins>
+</configuration>
