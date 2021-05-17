@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchq.Moxy.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.liuchq.Moxy.bean.Course">
+    <id column="course_id" jdbcType="VARCHAR" property="courseId" />
+    <result column="course_number" jdbcType="VARCHAR" property="courseNumber" />
+    <result column="course_section_number" jdbcType="VARCHAR" property="courseSectionNumber" />
+    <result column="course_createtime" jdbcType="TIMESTAMP" property="courseCreatetime" />
+    <result column="course_owner" jdbcType="VARCHAR" property="courseOwner" />
+    <result column="course_need_seconds" jdbcType="VARCHAR" property="courseNeedSeconds" />
+    <result column="course_version" jdbcType="VARCHAR" property="courseVersion" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    course_id, course_number, course_section_number, course_createtime, course_owner, 
+    course_need_seconds, course_version
+  </sql>
+  <select id="selectByExample" parameterType="com.liuchq.Moxy.bean.CourseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from moxy_t_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from moxy_t_course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from moxy_t_course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.liuchq.Moxy.bean.CourseExample">
+    delete from moxy_t_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.liuchq.Moxy.bean.Course">
+    insert into moxy_t_course (course_id, course_number, course_section_number, 
+      course_createtime, course_owner, course_need_seconds, 
+      course_version)
+    values (#{courseId,jdbcType=VARCHAR}, #{courseNumber,jdbcType=VARCHAR}, #{courseSectionNumber,jdbcType=VARCHAR}, 
+      #{courseCreatetime,jdbcType=TIMESTAMP}, #{courseOwner,jdbcType=VARCHAR}, #{courseNeedSeconds,jdbcType=VARCHAR}, 
+      #{courseVersion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.liuchq.Moxy.bean.Course">
+    insert into moxy_t_course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="courseNumber != null">
+        course_number,
+      </if>
+      <if test="courseSectionNumber != null">
+        course_section_number,
+      </if>
+      <if test="courseCreatetime != null">
+        course_createtime,
+      </if>
+      <if test="courseOwner != null">
+        course_owner,
+      </if>
+      <if test="courseNeedSeconds != null">
+        course_need_seconds,
+      </if>
+      <if test="courseVersion != null">
+        course_version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNumber != null">
+        #{courseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="courseSectionNumber != null">
+        #{courseSectionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="courseCreatetime != null">
+        #{courseCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courseOwner != null">
+        #{courseOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNeedSeconds != null">
+        #{courseNeedSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="courseVersion != null">
+        #{courseVersion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.liuchq.Moxy.bean.CourseExample" resultType="java.lang.Long">
+    select count(*) from moxy_t_course
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update moxy_t_course
+    <set>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseNumber != null">
+        course_number = #{record.courseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseSectionNumber != null">
+        course_section_number = #{record.courseSectionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseCreatetime != null">
+        course_createtime = #{record.courseCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.courseOwner != null">
+        course_owner = #{record.courseOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseNeedSeconds != null">
+        course_need_seconds = #{record.courseNeedSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseVersion != null">
+        course_version = #{record.courseVersion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update moxy_t_course
+    set course_id = #{record.courseId,jdbcType=VARCHAR},
+      course_number = #{record.courseNumber,jdbcType=VARCHAR},
+      course_section_number = #{record.courseSectionNumber,jdbcType=VARCHAR},
+      course_createtime = #{record.courseCreatetime,jdbcType=TIMESTAMP},
+      course_owner = #{record.courseOwner,jdbcType=VARCHAR},
+      course_need_seconds = #{record.courseNeedSeconds,jdbcType=VARCHAR},
+      course_version = #{record.courseVersion,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuchq.Moxy.bean.Course">
+    update moxy_t_course
+    <set>
+      <if test="courseNumber != null">
+        course_number = #{courseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="courseSectionNumber != null">
+        course_section_number = #{courseSectionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="courseCreatetime != null">
+        course_createtime = #{courseCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="courseOwner != null">
+        course_owner = #{courseOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNeedSeconds != null">
+        course_need_seconds = #{courseNeedSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="courseVersion != null">
+        course_version = #{courseVersion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liuchq.Moxy.bean.Course">
+    update moxy_t_course
+    set course_number = #{courseNumber,jdbcType=VARCHAR},
+      course_section_number = #{courseSectionNumber,jdbcType=VARCHAR},
+      course_createtime = #{courseCreatetime,jdbcType=TIMESTAMP},
+      course_owner = #{courseOwner,jdbcType=VARCHAR},
+      course_need_seconds = #{courseNeedSeconds,jdbcType=VARCHAR},
+      course_version = #{courseVersion,jdbcType=VARCHAR}
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

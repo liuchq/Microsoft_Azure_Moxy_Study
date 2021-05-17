@@ -1,5 +1,5 @@
-package com.liuchq.Moxy.test;
-
+import com.liuchq.Moxy.utils.EncryptUtils;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -11,20 +11,53 @@ import java.util.List;
 
 /**
  * @program: Microsoft_Azure_Moxy_Study
- * @description: 测试
+ * @description: uuid
  * @author: liuchq
- * @create: 2021-05-16
+ * @create: 2021-05-17
  **/
 public class TestDoSomeThing {
-    public static void main(String[] args) {
-        createMapper();
+
+    @Test
+    public void forPassword() throws Exception {
+        String psw = "liuchq";
+
+        String key = "1234567887654321";
+
+        //AES加密
+        String s = EncryptUtils.aesEncrypt(psw,key);
+        System.out.println("加密后："+s);
+
+        //AES解密
+        String s1 = EncryptUtils.aesDecrypt(s,key);
+        System.out.println("解密后:"+s1);
+
     }
 
 
     /**
-     * 生成mapper
+     * 输出字符串长度
      */
-    public static void createMapper(){
+    @Test
+    public void length(){
+        System.out.println("09641742E3114198B8CC6592F8D1CCD2".length());
+    }
+
+    /**
+     * 生成UUID
+     */
+    @Test
+    public void getUUID(){
+        for (int i = 0; i < 5; i++) {
+            System.out.println(java.util.UUID.randomUUID().toString().replace("-","").toUpperCase());
+        }
+    }
+
+
+    /**
+     * 创建持久层
+     */
+    @Test
+    public void createMapper(){
         try {
             List<String> warnings = new ArrayList<String>();
             boolean overwrite = true;

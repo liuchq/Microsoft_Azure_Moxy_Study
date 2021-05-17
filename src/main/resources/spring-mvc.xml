@@ -50,26 +50,26 @@
     <context:component-scan base-package="com.liuchq.Moxy.handle"/>
 
     <!-- 声明拦截器   -->
-    <mvc:interceptors>
-        <!--第一个拦截器-->
-        <mvc:interceptor>
-            <!--指定拦截地址
-                path:使用**通配符
-                    例如:path="user/**"
-            -->
-            <mvc:mapping path="/city/testInterceptor.do"/>
-            <!--指定不拦截的地址-->
-<!--            <mvc:exclude-mapping path="/city/testLoginInterceptor.do"/>-->
-            <bean class="com.liuchq.testMaven.handle.MyInterceptor"/>
-        </mvc:interceptor>
-        <!-- 第二个拦截器,测试多个拦截器的执行顺序-->
-        <mvc:interceptor>
-            <mvc:mapping path="/city/testInterceptor.do"/>
-            <bean class="com.liuchq.testMaven.handle.MyInterceptor2"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/city/testLoginInterceptor.do"/>
-            <bean class="com.liuchq.testMaven.handle.MyLoginInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--    <mvc:interceptors>-->
+<!--        &lt;!&ndash;第一个拦截器&ndash;&gt;-->
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;指定拦截地址-->
+<!--                path:使用**通配符-->
+<!--                    例如:path="user/**"-->
+<!--            &ndash;&gt;-->
+<!--            <mvc:mapping path="/city/testInterceptor.do"/>-->
+<!--            &lt;!&ndash;指定不拦截的地址&ndash;&gt;-->
+<!--&lt;!&ndash;            <mvc:exclude-mapping path="/city/testLoginInterceptor.do"/>&ndash;&gt;-->
+<!--            <bean class="com.liuchq.Moxy.handle.MyInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--        &lt;!&ndash; 第二个拦截器,测试多个拦截器的执行顺序&ndash;&gt;-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/city/testInterceptor.do"/>-->
+<!--            <bean class="com.liuchq.Moxy.handle.MyInterceptor2"/>-->
+<!--        </mvc:interceptor>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/city/testLoginInterceptor.do"/>-->
+<!--            <bean class="com.liuchq.Moxy.handle.MyLoginInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 </beans>
