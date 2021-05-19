@@ -1,4 +1,7 @@
 import com.liuchq.Moxy.utils.EncryptUtils;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -16,6 +19,17 @@ import java.util.List;
  * @create: 2021-05-17
  **/
 public class TestDoSomeThing {
+
+    public static final Logger logger = LogManager.getLogger("TestDoSomeThing");
+
+    @Test
+    public void testLog(){
+        logger.info("log info");
+        logger.error("log error");
+        logger.debug("log debug");
+        logger.warn("log warn");
+    }
+
 
     @Test
     public void forPassword() throws Exception {

@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>课程明细</title>
+    <jsp:include page="../../common.jsp"></jsp:include>
 </head>
 <body>
     <h1>课程明细</h1>

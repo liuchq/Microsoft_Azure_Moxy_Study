@@ -2,6 +2,8 @@ package com.liuchq.Moxy.controller;
 
 import com.liuchq.Moxy.service.SettingService;
 import com.liuchq.Moxy.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
  * @author: liuchq
  * @create: 2021-05-16
  **/
-@RequestMapping(value = "/moxy")
+@RequestMapping(value = "/user")
 @Controller
 public class MyController {
+
+    public static final Logger logger = LogManager.getLogger("MyController");
+
+
 
     @Autowired
     private UserService userService;

@@ -9,8 +9,9 @@
 <html>
 <head>
     <title>登录出错</title>
+    <jsp:include page="../../common.jsp"></jsp:include>
 </head>
 <body>
-    <h1>登录出错</h1>
+    <h1 style="text-align: center;margin-top: 100px">自己写的竟然错哪里都不知道吗？</h1>
 </body>
 </html>
