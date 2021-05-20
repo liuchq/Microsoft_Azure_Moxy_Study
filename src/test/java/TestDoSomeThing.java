@@ -24,10 +24,10 @@ public class TestDoSomeThing {
 
     @Test
     public void testLog(){
-        logger.info("log info");
-        logger.error("log error");
-        logger.debug("log debug");
-        logger.warn("log warn");
+//        logger.info("log info");
+//        logger.error("log error");
+//        logger.debug("log debug");
+//        logger.warn("log warn");
     }
 
 

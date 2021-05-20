@@ -22,8 +22,6 @@ public class MyController {
 
     public static final Logger logger = LogManager.getLogger("MyController");
 
-
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -37,6 +35,7 @@ public class MyController {
             boolean login = userService.userLogin(userAccount, userPsw);
             if (login){
                 mav.setViewName("courseDetail");
+                logger.info("用户："+userAccount+"登录");
             }
         }catch (Exception e){
             e.printStackTrace();
