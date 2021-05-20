@@ -31,15 +31,18 @@ public class MyController {
     public ModelAndView userLogin(String userAccount,String userPsw){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("loginError");
+        String log = "用户:"+userAccount+"登录，且登录失败";
         try {
             boolean login = userService.userLogin(userAccount, userPsw);
             if (login){
                 mav.setViewName("courseDetail");
-                logger.info("用户："+userAccount+"登录");
+                log = log.replace("失败","成功");
             }
         }catch (Exception e){
             e.printStackTrace();
+            logger.error(e.getMessage(),e);
         }
+        logger.info(log);
         return mav;
     }
 }
