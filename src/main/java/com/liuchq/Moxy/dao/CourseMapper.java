@@ -29,4 +29,14 @@ public interface CourseMapper {
     int updateByPrimaryKeySelective(Course record);
 
     int updateByPrimaryKey(Course record);
+
+    /**
+     * 根据用户账户去查找关联的未学习完成的课程
+     *
+     * @author: liuchq
+     * @date: 2021/5/21 17:13
+     * @param userAccount
+     * @return: java.util.List<com.liuchq.Moxy.bean.Course>
+     */
+    List<Course> selectNotFinishCourseByUserAccount(String userAccount);
 }

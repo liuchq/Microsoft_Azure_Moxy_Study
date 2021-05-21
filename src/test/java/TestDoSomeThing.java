@@ -20,7 +20,7 @@ import java.util.List;
  **/
 public class TestDoSomeThing {
 
-    public static final Logger logger = LogManager.getLogger("TestDoSomeThing");
+    //public static final Logger logger = LogManager.getLogger("TestDoSomeThing");
 
     @Test
     public void testLog(){
@@ -33,7 +33,7 @@ public class TestDoSomeThing {
 
     @Test
     public void forPassword() throws Exception {
-        String psw = "liuchq";
+        String psw = "test";
 
         String key = "1234567887654321";
 

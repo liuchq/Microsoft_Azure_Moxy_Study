@@ -50,8 +50,8 @@
     <context:component-scan base-package="com.liuchq.Moxy.handle"/>
 
     <!-- 声明拦截器   -->
-<!--    <mvc:interceptors>-->
-<!--        &lt;!&ndash;第一个拦截器&ndash;&gt;-->
+    <mvc:interceptors>
+        <!--第一个拦截器-->
 <!--        <mvc:interceptor>-->
 <!--            &lt;!&ndash;指定拦截地址-->
 <!--                path:使用**通配符-->
@@ -67,9 +67,10 @@
 <!--            <mvc:mapping path="/city/testInterceptor.do"/>-->
 <!--            <bean class="com.liuchq.Moxy.handle.MyInterceptor2"/>-->
 <!--        </mvc:interceptor>-->
-<!--        <mvc:interceptor>-->
-<!--            <mvc:mapping path="/city/testLoginInterceptor.do"/>-->
-<!--            <bean class="com.liuchq.Moxy.handle.MyLoginInterceptor"/>-->
-<!--        </mvc:interceptor>-->
-<!--    </mvc:interceptors>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/user/**"/>
+            <mvc:exclude-mapping path="/user/userLogin.do"/>
+            <bean class="com.liuchq.Moxy.handle.MyLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

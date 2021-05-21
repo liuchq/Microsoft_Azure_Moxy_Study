@@ -92,6 +92,19 @@
     from moxy_t_course
     where course_id = #{courseId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectNotFinishCourseByUserAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from moxy_t_course
+    where
+    course_need_seconds &lt;&gt; '0'
+    and
+    course_owner = (
+    select user_id from moxy_t_user where user_accout = #{userAccount,jdbcType=VARCHAR}
+    )
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from moxy_t_course
     where course_id = #{courseId,jdbcType=VARCHAR}

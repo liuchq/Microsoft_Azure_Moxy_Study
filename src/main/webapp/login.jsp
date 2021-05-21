@@ -5,7 +5,6 @@
     <jsp:include page="common.jsp"></jsp:include>
 </head>
 <body>
-<%--    登录<% session.setAttribute("userName","zs");%>--%>
     <div style="text-align: center">
         <form action="user/userLogin.do" method="post">
             <div style="padding: 100px 40% 10px;">
