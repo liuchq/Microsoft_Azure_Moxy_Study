@@ -17,6 +17,8 @@
 <body>
     <h1>课程明细</h1>
     <button class="btn-success" onclick="test()">点击开始学习默认课程</button>
+
+    <button class="btn-success" onclick="test2()">测试2</button>
 </body>
 <script>
     var pathHead = '<%=pathHead%>';
@@ -27,6 +29,33 @@
             url:pathHead+"user/studyDemo.do",
             success:function (data) {
                 alert(data);
+            },
+            complete:function (xhr,status) {
+                //获取响应头
+                var redirect = xhr.getResponseHeader("REDIRECT");
+                //如果包含"REDIRECT",说明是拦截器返回的
+                if ("REDIRECT" == redirect){
+                    var win = window;
+                    while (win != win.top){
+                        win = win.top;
+                    }
+                    //重新跳转到指定页面
+                    win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+                }
+            }
+        });
+    }
+
+    function test2() {
+        $.ajax({
+            type:"POST",
+            url:pathHead+"user/test2.do",
+            success:function (data) {
+                alert(data);
+            },
+            complete:function (xhr,status) {
+                alert(xhr.status);
+                alert(status);
             }
         });
     }

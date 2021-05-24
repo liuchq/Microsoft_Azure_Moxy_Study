@@ -56,10 +56,17 @@ public class MyController {
 
     @RequestMapping(value = "/studyDemo.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String studyDemo(HttpSession session) throws IOException {
+    public String studyDemo(HttpSession session) {
         //登录的用户
         Object userAccount = session.getAttribute("userAccount");
         studyService.startStudy(String.valueOf(userAccount));
         return "后台已经开始刷课";
+    }
+
+    @RequestMapping(value = "/test2.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String test2(HttpSession session) {
+        //test2
+        return "test2";
     }
 }

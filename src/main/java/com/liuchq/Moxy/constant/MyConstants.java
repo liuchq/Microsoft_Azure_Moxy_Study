@@ -48,7 +48,7 @@ public class MyConstants {
     /**
      * 学习完毕标识
      */
-    public static final String STUDY_FINISHED = "学习完毕";
+    public static final String STUDY_FINISHED = "本次请求学习完毕";
 
     /**
      * 学习出错标识

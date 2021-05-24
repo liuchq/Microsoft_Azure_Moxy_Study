@@ -2,6 +2,8 @@ package com.liuchq.Moxy.dao;
 
 import com.liuchq.Moxy.bean.Course;
 import com.liuchq.Moxy.bean.CourseExample;
+
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -39,4 +41,14 @@ public interface CourseMapper {
      * @return: java.util.List<com.liuchq.Moxy.bean.Course>
      */
     List<Course> selectNotFinishCourseByUserAccount(String userAccount);
+
+    /**
+     * 根据用户和课程num去查找课程，并且修改状态
+     *
+     * @author: liuchq
+     * @date: 2021/5/24 9:48
+     * @param map
+     * @return: void
+     */
+    void updateByUserAndCourseNumber(@Param("map")HashMap<String,String> map);
 }

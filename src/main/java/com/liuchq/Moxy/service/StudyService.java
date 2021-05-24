@@ -18,7 +18,7 @@ public interface StudyService {
      * @author: liuchq
      * @date: 2021/5/21 15:11
      * @param
-     * @return: java.util.List<java.util.Map < java.lang.String, java.lang.String>> todo
+     * @return: java.util.List<java.util.Map < java.lang.String, java.lang.String>>
      */
     List<Map<String,String>>getCourse(String userName) throws IOException;
 
@@ -30,23 +30,22 @@ public interface StudyService {
      * @date: 2021/5/21 15:12
      * @param courseid
      * @param chapterid
-     * @return: void todo
+     * @return: void
      */
     void courseStudyMethod(String courseid,String chapterid,String userAccount);
 
 
-
     /**
      * 记录学习标记 （学习后）
-     *
      * @author: liuchq
      * @date: 2021/5/21 15:14
      * @param courseID
-     * @param finishSign
-     * @param userID
+     * @param message
+     * @param needSeconds
+     * @param userAccount
      * @return: void
      */
-    void setStudyFinishSign(String courseID, String finishSign,String userID);
+    void setStudyFinishSign(String courseID, String message,String needSeconds, String userAccount);
 
 
     /**

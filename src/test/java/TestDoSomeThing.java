@@ -1,15 +1,20 @@
+import com.liuchq.Moxy.constant.MyConstants;
+import com.liuchq.Moxy.dao.CourseMapper;
 import com.liuchq.Moxy.utils.EncryptUtils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,9 +23,26 @@ import java.util.List;
  * @author: liuchq
  * @create: 2021-05-17
  **/
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class TestDoSomeThing {
 
+    @Autowired
+    private CourseMapper courseMapper;
+
+
     //public static final Logger logger = LogManager.getLogger("TestDoSomeThing");
+
+    @Test
+    public void Data(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("courseID","12345");
+        map.put("message", MyConstants.STUDY_FINISHED);
+        map.put("needSeconds","200");
+        map.put("userAccount","test");
+        courseMapper.updateByUserAndCourseNumber(map);
+    }
+
 
     @Test
     public void testLog(){

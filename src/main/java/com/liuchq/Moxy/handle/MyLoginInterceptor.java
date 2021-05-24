@@ -27,7 +27,12 @@ public class MyLoginInterceptor implements HandlerInterceptor {
             //暂时只允许这两个用户登录
             return true;
         }else {
-            request.getRequestDispatcher("/interceptorError.jsp").forward(request,response);
+            //request.getRequestDispatcher("/interceptorError.jsp").forward(request,response);
+            response.addHeader("REDIRECT","REDIRECT");
+            response.addHeader("CONTEXTPATH","../interceptorError.jsp");
+            response.addHeader("Access-Control-Expose-Headers","REDIRECT,CONTEXTPATH");
+            response.setStatus(401);
+
             return false;
         }
     }

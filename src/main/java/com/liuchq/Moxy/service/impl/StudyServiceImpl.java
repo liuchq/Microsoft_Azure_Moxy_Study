@@ -33,7 +33,7 @@ public class StudyServiceImpl implements StudyService {
     private CourseMapper courseMapper;
 
     @Override
-    public List<Map<String, String>> getCourse(String userAccount) throws IOException {
+    public List<Map<String, String>> getCourse(String userAccount) {
         List<Map<String,String>> courseList = new ArrayList<>();
 
         List<Course> courses = courseMapper.selectNotFinishCourseByUserAccount(userAccount);
@@ -66,10 +66,15 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void setStudyFinishSign(String courseID, String finishSign, String userAccount) {
+    public void setStudyFinishSign(String courseID, String message,String needSeconds, String userAccount) {
         try {
             //记录课程学习状态
-
+            HashMap<String, String> map = new HashMap<>();
+            map.put("courseID",courseID);
+            map.put("message",message);
+            map.put("needSeconds",needSeconds);
+            map.put("userAccount",userAccount);
+            courseMapper.updateByUserAndCourseNumber(map);
         }catch (Exception e){
             logger.error("setStudyFinishSign方法出错",e);
         }
@@ -99,7 +104,7 @@ public class StudyServiceImpl implements StudyService {
             }catch (Exception e){
                 logger.error(e.getMessage(),e);
             }
-        }while (LocalDateTime.now().isBefore(endTime) && !isStudyFinish);
+        }while (LocalDateTime.now().isBefore(endTime) || !isStudyFinish);
         logger.info("学习结束---");
         if (isStudyFinish){
             logger.info("课程已经全部学习结束");
@@ -113,9 +118,9 @@ public class StudyServiceImpl implements StudyService {
                 String msg = jsonObject.get(MyConstants.RETURN_MSG).toString();
                 if (StringUtils.isNotBlank(msg)){
                     logger.info(userAccount+"账户下课程chapterid="+chapterid+MyConstants.STUDY_ERROR+msg);
-                    //标记 课程ID 学习失败  todo
+                    //标记 课程ID 学习失败
                     this.setStudyFinishSign(chapterid,
-                            MyConstants.STUDY_ERROR+msg,
+                            MyConstants.STUDY_ERROR+msg,"0",
                             userAccount);
                 }else {
                     logger.info("解析返回值出错啦：未能识别返回MSG,请看输出得返回值是否正确");
@@ -130,16 +135,16 @@ public class StudyServiceImpl implements StudyService {
 
             if ("Y".equals(courseCompleted) || needTime.equals(cumtime)){
                 logger.info("####"+MyConstants.CHAPTER_ID_NAME+"="+jsonObject.get(MyConstants.CHAPTER_ID_NAME).toString()+"的课程已经学习完毕");
-                //标记 课程ID 已经学习完成 todo
+                //标记 课程ID 已经学习完成
                 this.setStudyFinishSign(jsonObject.get(MyConstants.CHAPTER_ID_NAME).toString(),
-                        MyConstants.STUDY_FINISHED,
+                        MyConstants.STUDY_FINISHED,"0",
                         userAccount);
             }else {
                 int i = Integer.valueOf(needTime) - Integer.valueOf(cumtime);
                 logger.info("####"+MyConstants.CHAPTER_ID_NAME+"="+jsonObject.get(MyConstants.CHAPTER_ID_NAME).toString()+"的课程已学习"+jsonObject.get(MyConstants.VALITD_TIME)+"；还需要学习"+i+"秒");
-                //标记 课程ID 还需要多长时间去学习  todo
+                //标记 课程ID 还需要多长时间去学习
                 this.setStudyFinishSign(jsonObject.get(MyConstants.CHAPTER_ID_NAME).toString(),
-                        MyConstants.STUDY_FINISHED,
+                        MyConstants.STUDY_FINISHED,String.valueOf(i),
                         userAccount);
             }
         }catch (Exception e){

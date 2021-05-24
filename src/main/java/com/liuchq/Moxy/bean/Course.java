@@ -26,6 +26,8 @@ public class Course {
 
     private String courseVersion;
 
+    private String courseMemo;
+
     public String getCourseId() {
         return courseId;
     }
@@ -80,5 +82,13 @@ public class Course {
 
     public void setCourseVersion(String courseVersion) {
         this.courseVersion = courseVersion == null ? null : courseVersion.trim();
+    }
+
+    public String getCourseMemo(){
+        return courseMemo;
+    }
+
+    public void setCourseMemo(String courseMemo){
+        this.courseMemo = courseMemo == null ? null : courseMemo.trim();
     }
 }

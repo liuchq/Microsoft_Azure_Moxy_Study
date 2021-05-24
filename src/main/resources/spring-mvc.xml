@@ -70,6 +70,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/**"/>
             <mvc:exclude-mapping path="/user/userLogin.do"/>
+            <mvc:exclude-mapping path="/user/test2.do"/>
             <bean class="com.liuchq.Moxy.handle.MyLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
