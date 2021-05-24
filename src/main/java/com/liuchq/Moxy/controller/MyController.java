@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class MyController {
     private StudyService studyService;
 
     @RequestMapping(value = "/userLogin.do",method = RequestMethod.POST)
-    public ModelAndView userLogin(String userAccount, String userPsw, HttpSession session){
+    public ModelAndView userLogin(String userAccount, String userPsw, HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("loginError");
         String log = "用户:"+userAccount+"登录，且登录失败";
@@ -43,7 +44,7 @@ public class MyController {
             boolean login = userService.userLogin(userAccount, userPsw);
             if (login){
                 mav.setViewName("courseDetail");
-                session.setAttribute("userAccount",userAccount);
+                request.getSession().setAttribute("userAccount",userAccount);
                 log = log.replace("失败","成功");
             }
         }catch (Exception e){
