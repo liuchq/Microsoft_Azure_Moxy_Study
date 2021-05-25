@@ -64,10 +64,23 @@ public class MyController {
         return "后台已经开始刷课";
     }
 
-    @RequestMapping(value = "/test2.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "/loginOut.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String test2(HttpSession session) {
+    public String loginOut(HttpServletRequest request) {
+        //注销登录
+        HttpSession session = request.getSession();
+        Object userAccount = session.getAttribute("userAccount");
+        logger.info(userAccount + "注销操作;");
+        session.setAttribute("userAccount","");
+        return "success";
+    }
+
+    @RequestMapping(value = "/test3.do",method = RequestMethod.GET,produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String test3(HttpSession session) {
         //test2
         return "test2";
     }
+
+
 }

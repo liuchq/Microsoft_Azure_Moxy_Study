@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    session.setAttribute("userName",null);
+%>
 <html>
 <head>
     <title>登录界面</title>

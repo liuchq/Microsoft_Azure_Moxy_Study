@@ -19,15 +19,17 @@ public class MyLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("登录权限拦截器验证开始");
         //拦截器进行权限验证
         HttpSession session = request.getSession();
         Object obj = session.getAttribute("userName");
+        logger.info("登录权限拦截器验证开始===登录账户:"+obj);
         if (obj != null && ("admin".equals(obj.toString()) || "test".equals(obj.toString()))){
             //暂时只允许这两个用户登录
             return true;
+        }else if (obj == null){
+            request.getRequestDispatcher("/interceptorError.jsp").forward(request,response);
+            return false;
         }else {
-            //request.getRequestDispatcher("/interceptorError.jsp").forward(request,response);
             response.addHeader("REDIRECT","REDIRECT");
             response.addHeader("CONTEXTPATH","../interceptorError.jsp");
             response.addHeader("Access-Control-Expose-Headers","REDIRECT,CONTEXTPATH");

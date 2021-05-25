@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    session.setAttribute("userName",request.getSession().getAttribute("userName"));
+    session.setAttribute("userName",request.getSession().getAttribute("userAccount"));
+    Object userAccount = request.getSession().getAttribute("userAccount");
     String pathHead = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
 %>
 <html>
@@ -20,9 +21,12 @@
     <button class="btn-success" onclick="test()">点击开始学习默认课程</button>
 
     <button class="btn-success" onclick="test2()">测试2</button>
+
+    <button class="btn-success" onclick="loginOut()">注销</button>
 </body>
 <script>
     var pathHead = '<%=pathHead%>';
+    var userAccount = '<%=userAccount%>';
 
     function test() {
         $.ajax({
@@ -32,6 +36,7 @@
                 alert(data);
             },
             complete:function (xhr,status) {
+                //alert(userAccount);
                 //获取响应头
                 var redirect = xhr.getResponseHeader("REDIRECT");
                 //如果包含"REDIRECT",说明是拦截器返回的
@@ -57,6 +62,19 @@
             complete:function (xhr,status) {
                 alert(xhr.status);
                 alert(status);
+            }
+        });
+    }
+
+    function loginOut() {
+        $.ajax({
+            type:"POST",
+            url:pathHead+"user/loginOut.do",
+            async:false,
+            success:function (data) {
+                if (data == "success"){
+                    window.location.href='../login.jsp';
+                }
             }
         });
     }
