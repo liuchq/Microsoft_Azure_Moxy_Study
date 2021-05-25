@@ -33,7 +33,7 @@
             type:"POST",
             url:pathHead+"user/studyDemo.do",
             success:function (data) {
-                alert(data);
+                //alert(data);
             },
             complete:function (xhr,status) {
                 //alert(userAccount);
@@ -50,6 +50,7 @@
                 }
             }
         });
+        alert("已经开始刷课,可以耐心等待,过会儿再来看");
     }
 
     function test2() {
