@@ -93,4 +93,11 @@ public class MyController {
     }
 
 
+    @RequestMapping(value = "/uploadCourse.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String uploadCourse(HttpSession session) {
+        logger.info("上传文件操作");
+        return "成功";
+    }
+
 }

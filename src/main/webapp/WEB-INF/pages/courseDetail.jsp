@@ -46,12 +46,12 @@
         <button class="btn-success" onclick="loginOut()">注销</button>
     </div>
     <div style="margin: 20px;border: 1px solid black;width: 20%;padding: 10px 0px 10px 10px">
-        <input type="file" name="上传课程">
-        <button class="btn-success" onclick="updateCourse()" style="margin-top: 20px">上传课程</button>
+        <input type="file" name="上传课程" id="upload_Course">
+        <button class="btn-success" onclick="uploadCourse()" style="margin-top: 20px">上传课程</button>
     </div>
 
     <div style="margin: 20px">
-        <button class="btn-success" onclick="startStudyCourse()">点击开始学习你上传的课程</button>
+        <button class="btn-success" onclick="test()">点击开始学习你上传的课程</button>
     </div>
 
 </body>
@@ -138,6 +138,28 @@
                     });
                     $('#user_course tbody').append($tr);
                 })
+            }
+        });
+    };
+
+    function uploadCourse() {
+        var fileName = $('#upload_Course').val();
+        if(fileName.length <1){
+            alert("请先上传文件");
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append("file",$("#upload_Course").get(0).files[0]);
+        $.ajax({
+            type:"POST",
+            url:pathHead+"user/uploadCourse.do",
+            dataType:"json",
+            data:formData,
+            processData: false,
+            success:function (data) {
+                alert(data);
+                getUserAllCourse();
             }
         });
     }
