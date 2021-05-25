@@ -30,7 +30,7 @@ public class MyConstants {
     /**
      *设定程序运行时间  单位 秒  （一般可以设置你学习的课程中，时间最长的那个）
      */
-    public static final int RUN_TIME = 10;
+    public static final int RUN_TIME = 3600;
 
 
     //=================start======解析课程用到的静态变量====================================
