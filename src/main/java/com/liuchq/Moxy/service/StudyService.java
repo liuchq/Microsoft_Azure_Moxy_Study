@@ -1,5 +1,7 @@
 package com.liuchq.Moxy.service;
 
+import com.liuchq.Moxy.bean.Course;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -56,5 +58,16 @@ public interface StudyService {
      * @return: void
      */
     void startStudy(String userAccount);
+
+
+    /**
+     * 根据账户获取所有的要学习的课程
+     *
+     * @author: liuchq
+     * @date: 2021/5/25 16:07
+     * @param userAccount
+     * @return: java.util.List<com.liuchq.Moxy.bean.Course>
+     */
+    List<Course> getUserAllCourse(String userAccount);
 
 }

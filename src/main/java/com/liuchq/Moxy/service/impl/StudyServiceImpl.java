@@ -151,4 +151,9 @@ public class StudyServiceImpl implements StudyService {
             logger.error("解析返回值出错啦："+e.getMessage(),e);
         }
     }
+
+    @Override
+    public List<Course> getUserAllCourse(String userAccount) {
+        return courseMapper.selectUserAllCourse(userAccount);
+    }
 }

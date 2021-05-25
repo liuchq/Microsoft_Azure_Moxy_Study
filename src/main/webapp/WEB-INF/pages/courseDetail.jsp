@@ -17,16 +17,51 @@
     <jsp:include page="../../common.jsp"></jsp:include>
 </head>
 <body>
-    <h1>课程明细</h1>
-    <button class="btn-success" onclick="test()">点击开始学习默认课程</button>
 
-    <button class="btn-success" onclick="test2()">测试2</button>
+    <div style="margin: 20px">
+        <h1>课程明细</h1>
+        <table id="user_course" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>课程id</th>
+                    <th>课程小节id</th>
+                    <th>需要的时间</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <button class="btn-success" onclick="loginOut()">注销</button>
+            </tbody>
+        </table>
+
+        <button class="btn-success" onclick="getUserAllCourse()">查询</button>
+    </div>
+
+    <div style="margin: 20px">
+
+        <button class="btn-success" onclick="test()">点击开始学习默认课程</button>
+
+        <button class="btn-success" onclick="test2()">测试2</button>
+
+        <button class="btn-success" onclick="loginOut()">注销</button>
+    </div>
+    <div style="margin: 20px;border: 1px solid black;width: 20%;padding: 10px 0px 10px 10px">
+        <input type="file" name="上传课程">
+        <button class="btn-success" onclick="updateCourse()" style="margin-top: 20px">上传课程</button>
+    </div>
+
+    <div style="margin: 20px">
+        <button class="btn-success" onclick="startStudyCourse()">点击开始学习你上传的课程</button>
+    </div>
+
 </body>
 <script>
     var pathHead = '<%=pathHead%>';
     var userAccount = '<%=userAccount%>';
+
+    $(document).ready(function () {
+        getUserAllCourse();
+    });
 
     function test() {
         $.ajax({
@@ -51,7 +86,7 @@
             }
         });
         alert("已经开始刷课,可以耐心等待,过会儿再来看");
-    }
+    };
 
     function test2() {
         $.ajax({
@@ -65,7 +100,7 @@
                 alert(status);
             }
         });
-    }
+    };
 
     function loginOut() {
         $.ajax({
@@ -76,6 +111,33 @@
                 if (data == "success"){
                     window.location.href='../login.jsp';
                 }
+            }
+        });
+    };
+
+    function getUserAllCourse() {
+        $('#user_course tbody').empty();
+
+        $.ajax({
+            type:"GET",
+            url:pathHead+"user/getUserAllCourse.do",
+            async:false,
+            success:function (data) {
+                // var cc = JSON.stringify(data);
+                // alert(cc);
+                $.each(data,function (index,item) {
+                    var $tr = $('<tr>');
+                    $.each(item,function(name,val){
+                        if (name != "courseId"
+                            && name != "courseOwner"
+                            && name != "courseCreatetime"
+                            && name != "courseVersion" ){
+                            var $td = $('<td>').html(val);
+                            $tr.append($td);
+                        }
+                    });
+                    $('#user_course tbody').append($tr);
+                })
             }
         });
     }

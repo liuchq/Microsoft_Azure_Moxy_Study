@@ -70,7 +70,7 @@
   </sql>
   <sql id="Base_Column_List">
     course_id, course_number, course_section_number, course_createtime, course_owner, 
-    course_need_seconds, course_version
+    course_need_seconds, course_version,course_memo
   </sql>
   <select id="selectByExample" parameterType="com.liuchq.Moxy.bean.CourseExample" resultMap="BaseResultMap">
     select
@@ -177,6 +177,15 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="selectUserAllCourse" resultType="com.liuchq.Moxy.bean.Course">
+    select
+    <include refid="Base_Column_List" />
+    from moxy_t_course
+    where
+    course_owner = (
+    select user_id from moxy_t_user where user_account = #{userAccount,jdbcType=VARCHAR}
+    )
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update moxy_t_course

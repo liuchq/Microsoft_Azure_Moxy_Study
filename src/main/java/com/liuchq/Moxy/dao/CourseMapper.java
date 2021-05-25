@@ -51,4 +51,15 @@ public interface CourseMapper {
      * @return: void
      */
     void updateByUserAndCourseNumber(@Param("map")HashMap<String,String> map);
+
+
+    /**
+     * 查找这个用户所有课程
+     *
+     * @author: liuchq
+     * @date: 2021/5/25 16:20
+     * @param userAccount
+     * @return: java.util.List<com.liuchq.Moxy.bean.Course>
+     */
+    List<Course> selectUserAllCourse(String userAccount);
 }

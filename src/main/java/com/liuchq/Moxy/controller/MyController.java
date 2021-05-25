@@ -1,5 +1,6 @@
 package com.liuchq.Moxy.controller;
 
+import com.liuchq.Moxy.bean.Course;
 import com.liuchq.Moxy.service.SettingService;
 import com.liuchq.Moxy.service.StudyService;
 import com.liuchq.Moxy.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @program: Microsoft_Azure_Moxy_Study
@@ -80,6 +82,14 @@ public class MyController {
     public String test3(HttpSession session) {
         //test2
         return "test2";
+    }
+
+    @RequestMapping(value = "/getUserAllCourse.do",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public List<Course> getUserAllCourse(HttpServletRequest request){
+        Object userAccount = request.getSession().getAttribute("userAccount");
+        List<Course> courses = studyService.getUserAllCourse(userAccount.toString());
+        return courses;
     }
 
 
