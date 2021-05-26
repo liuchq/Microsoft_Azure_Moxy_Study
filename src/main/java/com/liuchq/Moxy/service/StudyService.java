@@ -70,4 +70,27 @@ public interface StudyService {
      */
     List<Course> getUserAllCourse(String userAccount);
 
+
+    /**
+     * 批量添加课程
+     *
+     * @author: liuchq
+     * @date: 2021/5/26 10:40
+     * @param courseList
+     * @return: void
+     */
+    void insertCourseForObj(List<Course> courseList);
+
+
+    /**
+     * 对解析文件内容里的课程插入
+     *
+     * @author: liuchq
+     * @date: 2021/5/26 10:51
+     * @param courseList
+     * @param userAccount
+     * @return: void
+     */
+    void insertCourseForString(List<String> courseList,String userAccount);
+
 }

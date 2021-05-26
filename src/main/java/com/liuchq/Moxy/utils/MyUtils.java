@@ -130,4 +130,15 @@ public class MyUtils {
         logger.info("urlMakeUp拼接URL成功："+urlSB.toString());
         return  urlSB.toString();
     }
+
+    /**
+     * 获取UUID
+     * @author: liuchq
+     * @date: 2021/5/26 10:56
+     * @param
+     * @return: java.lang.String
+     */
+    public static String getUUid(){
+        return java.util.UUID.randomUUID().toString().replace("-","").toUpperCase();
+    }
 }

@@ -4,19 +4,31 @@ import com.liuchq.Moxy.bean.Course;
 import com.liuchq.Moxy.service.SettingService;
 import com.liuchq.Moxy.service.StudyService;
 import com.liuchq.Moxy.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: Microsoft_Azure_Moxy_Study
@@ -95,9 +107,36 @@ public class MyController {
 
     @RequestMapping(value = "/uploadCourse.do",method = RequestMethod.POST,produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String uploadCourse(HttpSession session) {
+    public String uploadCourse(HttpServletRequest request) {
+        String reMsg = "成功";
         logger.info("上传文件操作");
-        return "成功";
+        List<String> stringList = new ArrayList<>();
+
+        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
+        Map<String, MultipartFile> files = multipartRequest.getFileMap();
+        MultipartFile file = files.get("file");
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(file.getInputStream(),"utf-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String len = bufferedReader.readLine();
+            while (len != null && StringUtils.isNotBlank(len)){
+                String finalLen = len.trim();
+                len = bufferedReader.readLine();
+                stringList.add(finalLen);
+            }
+        } catch (IOException e) {
+            logger.info("读取文件出错:"+e.getMessage(),e);
+            reMsg = "读取文件出错:"+e.getMessage();
+            e.printStackTrace();
+        }
+
+        //对课程内容处理,以及写入数据库
+        String userAccount = String.valueOf(request.getSession().getAttribute("userAccount"));
+        studyService.insertCourseForString(stringList,userAccount);
+
+        return reMsg;
     }
 
 }

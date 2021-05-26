@@ -2,8 +2,11 @@ package com.liuchq.Moxy.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liuchq.Moxy.bean.Course;
+import com.liuchq.Moxy.bean.User;
+import com.liuchq.Moxy.bean.UserExample;
 import com.liuchq.Moxy.constant.MyConstants;
 import com.liuchq.Moxy.dao.CourseMapper;
+import com.liuchq.Moxy.dao.UserMapper;
 import com.liuchq.Moxy.service.StudyService;
 import com.liuchq.Moxy.utils.MyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: liuchq
@@ -31,6 +31,9 @@ public class StudyServiceImpl implements StudyService {
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public List<Map<String, String>> getCourse(String userAccount) {
@@ -155,5 +158,30 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public List<Course> getUserAllCourse(String userAccount) {
         return courseMapper.selectUserAllCourse(userAccount);
+    }
+
+    @Override
+    public void insertCourseForObj(List<Course> courseList) {
+
+    }
+
+    @Override
+    public void insertCourseForString(List<String> courseList,String userAccount) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserAccountEqualTo(userAccount);
+        List<User> users = userMapper.selectByExample(userExample);
+
+        courseList.forEach(str ->{
+            Course course = new Course();
+            course.setCourseNumber(str.split(",")[0]);
+            course.setCourseSectionNumber(str.split(",")[1]);
+            course.setCourseId(MyUtils.getUUid());
+            course.setCourseCreatetime(new Date());
+            course.setCourseMemo("");
+            course.setCourseVersion("1");
+            course.setCourseNeedSeconds("300");
+            course.setCourseOwner(users.get(0).getUserId());
+            courseMapper.insertSelective(course);
+        });
     }
 }

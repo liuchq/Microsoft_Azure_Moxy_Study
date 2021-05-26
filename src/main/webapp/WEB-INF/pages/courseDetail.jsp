@@ -154,9 +154,10 @@
         $.ajax({
             type:"POST",
             url:pathHead+"user/uploadCourse.do",
-            dataType:"json",
+            dataType:"text",
             data:formData,
             processData: false,
+            contentType: false,
             success:function (data) {
                 alert(data);
                 getUserAllCourse();
