@@ -9,7 +9,6 @@
 <%
     session.setAttribute("userName",request.getSession().getAttribute("userAccount"));
     Object userAccount = request.getSession().getAttribute("userAccount");
-    String pathHead = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
 %>
 <html>
 <head>
@@ -56,7 +55,6 @@
 
 </body>
 <script>
-    var pathHead = '<%=pathHead%>';
     var userAccount = '<%=userAccount%>';
 
     $(document).ready(function () {

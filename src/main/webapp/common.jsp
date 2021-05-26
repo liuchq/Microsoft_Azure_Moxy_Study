@@ -19,6 +19,9 @@
     <link href="<%=url_head%>static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="<%=url_head%>static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <link rel="icon" href="<%=url_head%>static/image/liuchq.ico">
+    <script>
+        var pathHead = '<%=url_head%>';
+    </script>
 </head>
 <body>
 
