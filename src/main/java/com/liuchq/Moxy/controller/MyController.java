@@ -1,5 +1,7 @@
 package com.liuchq.Moxy.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.liuchq.Moxy.bean.Course;
 import com.liuchq.Moxy.service.SettingService;
 import com.liuchq.Moxy.service.StudyService;
@@ -89,11 +91,32 @@ public class MyController {
         return "success";
     }
 
-    @RequestMapping(value = "/test3.do",method = RequestMethod.GET,produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "/test2.do",method = RequestMethod.GET,produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String test3(HttpSession session) {
+    public String test2(HttpSession session) {
         //test2
+        logger.info("请求 test2方法");
         return "test2";
+    }
+
+    @RequestMapping(value = "/test3.do",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String test3(HttpServletRequest request) {
+        String value = request.getParameter("q");
+        logger.info("请求 test3方法,接收到的参数值为："+value);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < 6; i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("img_url","https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2823686447,1646334873&fm=26&gp=0.jpg");
+            jsonObject.put("login_name","test"+i*111);
+            jsonObject.put("login_url","www.baidu.com");
+            jsonObject.put("img_id",i);
+            jsonArray.add(jsonObject);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("item",jsonArray);
+        jsonObject.put("memo","测试axios的请求");
+        return jsonObject.toString();
     }
 
     @RequestMapping(value = "/getUserAllCourse.do",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
