@@ -101,7 +101,9 @@ public class MyController {
 
     @RequestMapping(value = "/test3.do",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String test3(HttpServletRequest request) {
+    public String test3(HttpServletRequest request) throws Exception{
+        //休眠1.5秒模拟网络环境慢
+        Thread.sleep(1500);
         String value = request.getParameter("q");
         logger.info("请求 test3方法,接收到的参数值为："+value);
         JSONArray jsonArray = new JSONArray();
@@ -109,7 +111,7 @@ public class MyController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("img_url","https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2823686447,1646334873&fm=26&gp=0.jpg");
             jsonObject.put("login_name","test"+i*111);
-            jsonObject.put("login_url","www.baidu.com");
+            jsonObject.put("login_url","https://www.baidu.com/");
             jsonObject.put("img_id",i);
             jsonArray.add(jsonObject);
         }
