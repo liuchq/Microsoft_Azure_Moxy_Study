@@ -9,6 +9,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    //服务器域名https登录
+    //String url_head =request.getHeader("X-Forwarded-Scheme")+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+    //普通登录
     String url_head =request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
 %>
 <html>
