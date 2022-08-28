@@ -65,7 +65,7 @@
   <!--配置一个可以批量执行的sqlSession-->
   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
     <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-    <constructor-arg name="executorType" value="SIMPLE"></constructor-arg>
+    <constructor-arg name="executorType" value="BATCH"></constructor-arg>
     <!--  executorType 的Batch 会导致sql语句中 返回 int 的方法 返回值为-2147482646   -->
   </bean>
   <!--==============================Mybatis整合配置 end===================================-->
