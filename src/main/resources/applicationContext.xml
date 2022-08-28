@@ -28,7 +28,7 @@
 
   <!--==============================数据源配置 start===================================-->
   <!--扫描业务逻辑组件-->
-  <context:component-scan base-package="com.liuchq.moxy">
+  <context:component-scan base-package="com.liuchq">
     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
   </context:component-scan>
 
@@ -53,19 +53,19 @@
     <!--数据源-->
     <property name="dataSource" ref="pooledDataSource"></property>
     <!--指定mybatis.mapper文件位置-->
-    <property name="mapperLocations" value="classpath:mapper/**/*.xml"></property>
+    <property name="mapperLocations" value="classpath:com/liuchq/**/*.xml"></property>
   </bean>
 
   <!--配置扫描器，将mybatis接口的实现加入到ioc容器中-->
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     <!--扫描所有的dao接口的实现加入到容器中-->
-    <property name="basePackage" value="com.liuchq.moxy.dao"></property>
+    <property name="basePackage" value="com.liuchq"></property>
   </bean>
 
   <!--配置一个可以批量执行的sqlSession-->
   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
     <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-    <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    <constructor-arg name="executorType" value="SIMPLE"></constructor-arg>
     <!--  executorType 的Batch 会导致sql语句中 返回 int 的方法 返回值为-2147482646   -->
   </bean>
   <!--==============================Mybatis整合配置 end===================================-->

@@ -1,7 +1,11 @@
+import com.liuchq.moxy.bean.Course;
 import com.liuchq.moxy.constant.MyConstants;
 import com.liuchq.moxy.dao.CourseMapper;
 import com.liuchq.moxy.utils.EncryptUtils;
 
+import com.liuchq.moxy.utils.MyUtils;
+import com.liuchq.wx.bean.WxToken;
+import com.liuchq.wx.dao.WxTokenMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -9,11 +13,14 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,17 +37,45 @@ public class TestDoSomeThing {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Autowired
+    private WxTokenMapper wxTokenMapper;
+
 
     //public static final Logger logger = LogManager.getLogger("TestDoSomeThing");
 
     @Test
+    @Transactional
+    public void insertToken(){
+        // 存入数据库并且返回
+        WxToken data = new WxToken();
+        data.setId(MyUtils.getUUid());
+        data.setToken("60_pvpGw1eFkT7rWhk1NOB-7jbquuK3juEOfCga9UmK82RNZyFT-V_OyNE_dYpb1xN0MMj1_7zoyQMIPMcVLMD9smYYD8zxJJX95hXGpeaXgAa9UAblVCg8MacOLeOa9lV0Rxii3C6WrnxFe6JkZDPjAFAVZL");
+        data.setCreateDate(new Date());
+        int i = wxTokenMapper.insert(data);
+        System.out.println(i);
+    }
+
+
+    @Test
+    @Transactional
+    @Commit
     public void Data(){
         HashMap<String, String> map = new HashMap<>();
-        map.put("courseID","12345");
+        map.put("courseID","22222");
         map.put("message", MyConstants.STUDY_FINISHED);
-        map.put("needSeconds","200");
+        map.put("needSeconds","111");
         map.put("userAccount","test");
         courseMapper.updateByUserAndCourseNumber(map);
+
+//        Course course = new Course();
+//        course.setCourseId("222");
+//        course.setCourseNumber("111");
+//        course.setCourseSectionNumber("111");
+//        course.setCourseCreatetime(new Date());
+//        course.setCourseOwner("111");
+//        course.setCourseNeedSeconds("111");
+//        course.setCourseVersion("111");
+//        courseMapper.insert(course);
     }
 
 

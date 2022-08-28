@@ -28,7 +28,7 @@ public class EncryptUtils {
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
 
     public static void main(String[] args) throws Exception {
-        String content = "liuchq";
+        String content = "com/liuchq";
         System.out.println("加密前：" + content);
 
         System.out.println("加密密钥和解密密钥：" + KEY);

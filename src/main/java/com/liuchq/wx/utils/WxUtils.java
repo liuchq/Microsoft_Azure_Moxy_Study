@@ -16,11 +16,13 @@ import java.util.Locale;
  **/
 public class WxUtils {
 
-    public static String getWxToken(){
+    public static WxTokenReturn getWxToken(){
         RestTemplate restTemplate = new RestTemplate();
         String url = SystemConfigUtils.getWxConfigParam(WxConstants.WXTOKENURL);
+        url += "&appid="+SystemConfigUtils.getWxConfigParam(WxConstants.APPID);
+        url += "&secret="+SystemConfigUtils.getWxConfigParam(WxConstants.WXSECRET);
         WxTokenReturn tokenReturn = restTemplate.getForObject(url, WxTokenReturn.class);
-        return "";
+        return tokenReturn;
     }
 
 

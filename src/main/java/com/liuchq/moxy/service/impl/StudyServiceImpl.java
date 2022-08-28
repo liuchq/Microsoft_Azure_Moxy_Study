@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -68,6 +69,7 @@ public class StudyServiceImpl implements StudyService {
         this.readMsg(returnMsg,chapterid,userAccount);
     }
 
+    @Transactional
     @Override
     public void setStudyFinishSign(String courseID, String message,String needSeconds, String userAccount) {
         try {
@@ -165,6 +167,7 @@ public class StudyServiceImpl implements StudyService {
 
     }
 
+    @Transactional
     @Override
     public void insertCourseForString(List<String> courseList,String userAccount) {
         UserExample userExample = new UserExample();

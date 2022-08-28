@@ -10,6 +10,7 @@
     </settings>
     <typeAliases>
         <package name="com.liuchq.moxy.bean"/>
+        <package name="com.liuchq.wx.bean"/>
     </typeAliases>
     <plugins>
         <!--配置pageHelper的设置 -->
