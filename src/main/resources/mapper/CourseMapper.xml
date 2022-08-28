@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuchq.Moxy.dao.CourseMapper">
-  <resultMap id="BaseResultMap" type="com.liuchq.Moxy.bean.Course">
+<mapper namespace="com.liuchq.moxy.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.liuchq.moxy.bean.Course">
     <id column="course_id" jdbcType="VARCHAR" property="courseId" />
     <result column="course_number" jdbcType="VARCHAR" property="courseNumber" />
     <result column="course_section_number" jdbcType="VARCHAR" property="courseSectionNumber" />
@@ -72,7 +72,7 @@
     course_id, course_number, course_section_number, course_createtime, course_owner, 
     course_need_seconds, course_version,course_memo
   </sql>
-  <select id="selectByExample" parameterType="com.liuchq.Moxy.bean.CourseExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuchq.moxy.bean.CourseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -109,13 +109,13 @@
     delete from moxy_t_course
     where course_id = #{courseId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuchq.Moxy.bean.CourseExample">
+  <delete id="deleteByExample" parameterType="com.liuchq.moxy.bean.CourseExample">
     delete from moxy_t_course
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuchq.Moxy.bean.Course">
+  <insert id="insert" parameterType="com.liuchq.moxy.bean.Course">
     insert into moxy_t_course (course_id, course_number, course_section_number, 
       course_createtime, course_owner, course_need_seconds, 
       course_version)
@@ -123,7 +123,7 @@
       #{courseCreatetime,jdbcType=TIMESTAMP}, #{courseOwner,jdbcType=VARCHAR}, #{courseNeedSeconds,jdbcType=VARCHAR}, 
       #{courseVersion,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.liuchq.Moxy.bean.Course">
+  <insert id="insertSelective" parameterType="com.liuchq.moxy.bean.Course">
     insert into moxy_t_course
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="courseId != null">
@@ -172,13 +172,13 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuchq.Moxy.bean.CourseExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.liuchq.moxy.bean.CourseExample" resultType="java.lang.Long">
     select count(*) from moxy_t_course
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <select id="selectUserAllCourse" resultType="com.liuchq.Moxy.bean.Course">
+  <select id="selectUserAllCourse" resultType="com.liuchq.moxy.bean.Course">
     select
     <include refid="Base_Column_List" />
     from moxy_t_course
@@ -229,7 +229,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuchq.Moxy.bean.Course">
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuchq.moxy.bean.Course">
     update moxy_t_course
     <set>
       <if test="courseNumber != null">
@@ -253,7 +253,7 @@
     </set>
     where course_id = #{courseId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuchq.Moxy.bean.Course">
+  <update id="updateByPrimaryKey" parameterType="com.liuchq.moxy.bean.Course">
     update moxy_t_course
     set course_number = #{courseNumber,jdbcType=VARCHAR},
       course_section_number = #{courseSectionNumber,jdbcType=VARCHAR},

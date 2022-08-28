@@ -24,7 +24,7 @@
         </javaTypeResolver>
 
         <!--指定javaBean生成的位置-->
-        <javaModelGenerator targetPackage="com.liuchq.Moxy.bean" targetProject=".\src\main\java">
+        <javaModelGenerator targetPackage="com.liuchq.moxy.bean" targetProject=".\src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -35,7 +35,7 @@
         </sqlMapGenerator>
 
         <!--指定dao接口生成的位置，mapper接口-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.liuchq.Moxy.dao"  targetProject=".\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.liuchq.moxy.dao"  targetProject=".\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

@@ -47,7 +47,7 @@
 
 
     <!-- SpringMVC 异常处理(一般处理的是Controller内的) -->
-    <context:component-scan base-package="com.liuchq.Moxy.handle"/>
+    <context:component-scan base-package="com.liuchq.moxy.handle"/>
 
     <!-- 声明拦截器   -->
     <mvc:interceptors>
@@ -60,19 +60,19 @@
 <!--            <mvc:mapping path="/city/testInterceptor.do"/>-->
 <!--            &lt;!&ndash;指定不拦截的地址&ndash;&gt;-->
 <!--&lt;!&ndash;            <mvc:exclude-mapping path="/city/testLoginInterceptor.do"/>&ndash;&gt;-->
-<!--            <bean class="com.liuchq.Moxy.handle.MyInterceptor"/>-->
+<!--            <bean class="com.liuchq.moxy.handle.MyInterceptor"/>-->
 <!--        </mvc:interceptor>-->
 <!--        &lt;!&ndash; 第二个拦截器,测试多个拦截器的执行顺序&ndash;&gt;-->
 <!--        <mvc:interceptor>-->
 <!--            <mvc:mapping path="/city/testInterceptor.do"/>-->
-<!--            <bean class="com.liuchq.Moxy.handle.MyInterceptor2"/>-->
+<!--            <bean class="com.liuchq.moxy.handle.MyInterceptor2"/>-->
 <!--        </mvc:interceptor>-->
         <mvc:interceptor>
             <mvc:mapping path="/user/**"/>
             <mvc:exclude-mapping path="/user/userLogin.do"/>
             <mvc:exclude-mapping path="/user/test2.do"/>
             <mvc:exclude-mapping path="/user/test3.do"/>
-            <bean class="com.liuchq.Moxy.handle.MyLoginInterceptor"/>
+            <bean class="com.liuchq.moxy.handle.MyLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

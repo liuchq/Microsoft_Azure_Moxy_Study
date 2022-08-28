@@ -1,6 +1,6 @@
-import com.liuchq.Moxy.constant.MyConstants;
-import com.liuchq.Moxy.dao.CourseMapper;
-import com.liuchq.Moxy.utils.EncryptUtils;
+import com.liuchq.moxy.constant.MyConstants;
+import com.liuchq.moxy.dao.CourseMapper;
+import com.liuchq.moxy.utils.EncryptUtils;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

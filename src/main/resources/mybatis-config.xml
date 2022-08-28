@@ -9,7 +9,7 @@
         <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
     <typeAliases>
-        <package name="com.liuchq.Moxy.bean"/>
+        <package name="com.liuchq.moxy.bean"/>
     </typeAliases>
     <plugins>
         <!--配置pageHelper的设置 -->

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuchq.Moxy.dao.SettingMapper">
-  <resultMap id="BaseResultMap" type="com.liuchq.Moxy.bean.Setting">
+<mapper namespace="com.liuchq.moxy.dao.SettingMapper">
+  <resultMap id="BaseResultMap" type="com.liuchq.moxy.bean.Setting">
     <id column="setting_id" jdbcType="VARCHAR" property="settingId" />
     <result column="setting_key" jdbcType="VARCHAR" property="settingKey" />
     <result column="setting_value" jdbcType="VARCHAR" property="settingValue" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     setting_id, setting_key, setting_value, setting_createtime, setting_description
   </sql>
-  <select id="selectByExample" parameterType="com.liuchq.Moxy.bean.SettingExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuchq.moxy.bean.SettingExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,13 +93,13 @@
     delete from moxy_t_setting
     where setting_id = #{settingId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuchq.Moxy.bean.SettingExample">
+  <delete id="deleteByExample" parameterType="com.liuchq.moxy.bean.SettingExample">
     delete from moxy_t_setting
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuchq.Moxy.bean.Setting">
+  <insert id="insert" parameterType="com.liuchq.moxy.bean.Setting">
     insert into moxy_t_setting (setting_id, setting_key, setting_value, 
       setting_createtime, setting_description
       )
@@ -107,7 +107,7 @@
       #{settingCreatetime,jdbcType=TIMESTAMP}, #{settingDescription,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.liuchq.Moxy.bean.Setting">
+  <insert id="insertSelective" parameterType="com.liuchq.moxy.bean.Setting">
     insert into moxy_t_setting
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="settingId != null">
@@ -144,7 +144,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuchq.Moxy.bean.SettingExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.liuchq.moxy.bean.SettingExample" resultType="java.lang.Long">
     select count(*) from moxy_t_setting
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -184,7 +184,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuchq.Moxy.bean.Setting">
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuchq.moxy.bean.Setting">
     update moxy_t_setting
     <set>
       <if test="settingKey != null">
@@ -202,7 +202,7 @@
     </set>
     where setting_id = #{settingId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuchq.Moxy.bean.Setting">
+  <update id="updateByPrimaryKey" parameterType="com.liuchq.moxy.bean.Setting">
     update moxy_t_setting
     set setting_key = #{settingKey,jdbcType=VARCHAR},
       setting_value = #{settingValue,jdbcType=VARCHAR},
