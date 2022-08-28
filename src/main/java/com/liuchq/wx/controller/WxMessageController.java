@@ -1,14 +1,15 @@
 package com.liuchq.wx.controller;
 
 import com.liuchq.wx.bean.WxCheckData;
-import com.liuchq.wx.bean.WxTokenReturn;
 import com.liuchq.wx.constant.WxConstants;
+import com.liuchq.wx.service.IMessageService;
 import com.liuchq.wx.service.TokenService;
 import com.liuchq.wx.utils.SystemConfigUtils;
 import com.liuchq.wx.utils.WxUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,9 @@ public class WxMessageController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private IMessageService messageService;
 
     public static final Logger logger = LogManager.getLogger("WxMessageController");
 
